@@ -2,3 +2,145 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Modern Career Advisor App Styles */
+@layer base {
+  * {
+    @apply transition-colors duration-300;
+  }
+
+  body {
+    @apply font-sans antialiased;
+  }
+}
+
+@layer components {
+  /* Gradient Backgrounds */
+  .gradient-primary {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  }
+
+  .gradient-secondary {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+  }
+
+  .gradient-success {
+    background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+  }
+
+  .gradient-warning {
+    background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%);
+  }
+
+  .gradient-auth {
+    background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+  }
+
+  .gradient-chat {
+    background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
+  }
+
+  /* Modern Card Styles */
+  .modern-card {
+    @apply bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  }
+
+  .modern-card:hover {
+    @apply transform scale-[1.02] shadow-2xl;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Button Animations */
+  .btn-modern {
+    @apply relative overflow-hidden rounded-xl font-semibold transition-all duration-300;
+  }
+
+  .btn-modern::before {
+    content: '';
+    @apply absolute inset-0 bg-gradient-to-r from-white/20 to-transparent opacity-0 -translate-x-full transition-all duration-500;
+  }
+
+  .btn-modern:hover::before {
+    @apply opacity-100 translate-x-full;
+  }
+
+  .btn-primary {
+    @apply btn-modern bg-gradient-to-r from-blue-500 to-purple-600 text-white shadow-lg hover:shadow-xl;
+  }
+
+  .btn-success {
+    @apply btn-modern bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg hover:shadow-xl;
+  }
+
+  .btn-warning {
+    @apply btn-modern bg-gradient-to-r from-yellow-500 to-orange-500 text-white shadow-lg hover:shadow-xl;
+  }
+
+  .btn-danger {
+    @apply btn-modern bg-gradient-to-r from-red-500 to-pink-600 text-white shadow-lg hover:shadow-xl;
+  }
+
+  /* Input Styles */
+  .input-modern {
+    @apply w-full px-4 py-3 rounded-xl border-2 border-gray-200 bg-white/50 backdrop-blur-sm transition-all duration-300 focus:border-blue-500 focus:ring-4 focus:ring-blue-200 focus:bg-white;
+  }
+
+  /* Loading Animation */
+  .loading-spinner {
+    @apply inline-block w-6 h-6 border-2 border-current border-t-transparent rounded-full animate-spin;
+  }
+
+  /* Chat Message Styles */
+  .chat-message-user {
+    @apply bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-2xl rounded-br-md shadow-lg;
+  }
+
+  .chat-message-bot {
+    @apply bg-white/80 backdrop-blur-sm text-gray-800 rounded-2xl rounded-bl-md shadow-lg border border-gray-200;
+  }
+
+  /* Pulse Animation */
+  .pulse-glow {
+    animation: pulse-glow 2s infinite;
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+    }
+    50% {
+      box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+    }
+  }
+
+  /* Floating Animation */
+  .float {
+    animation: float 6s ease-in-out infinite;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translateY(0px);
+    }
+    50% {
+      transform: translateY(-20px);
+    }
+  }
+
+  /* Slide In Animation */
+  .slide-in {
+    animation: slide-in 0.5s ease-out;
+  }
+
+  @keyframes slide-in {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
