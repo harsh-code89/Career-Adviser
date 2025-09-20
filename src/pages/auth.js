@@ -45,35 +45,53 @@ export default function AuthPage() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen p-4">
-      <h1 className="text-2xl font-bold mb-4">Authentication</h1>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        className="mb-2 p-2 border rounded"
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        className="mb-4 p-2 border rounded"
-      />
-      <button onClick={handleSignUp} className="mb-2 p-2 bg-blue-500 text-white rounded">
-        Sign Up
-      </button>
-      <button onClick={handleSignIn} className="mb-2 p-2 bg-green-500 text-white rounded">
-        Sign In
-      </button>
-      <button onClick={handleGoogleSignIn} className="mb-2 p-2 bg-red-500 text-white rounded">
-        Sign In with Google
-      </button>
-      <button onClick={handleSignOut} className="p-2 bg-gray-500 text-white rounded">
-        Sign Out
-      </button>
-      {message && <p className="mt-4 text-center text-red-500">{message}</p>}
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+      <div className="bg-white shadow-md rounded-lg p-8 w-full max-w-md">
+        <h1 className="text-3xl font-bold text-center text-gray-800 mb-6">Authentication</h1>
+        <div className="flex flex-col gap-4">
+          <input
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <input
+            type="password"
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          <button
+            onClick={handleSignUp}
+            className="p-3 bg-blue-500 text-white rounded-lg hover:bg-blue-600 transition"
+          >
+            Sign Up
+          </button>
+          <button
+            onClick={handleSignIn}
+            className="p-3 bg-green-500 text-white rounded-lg hover:bg-green-600 transition"
+          >
+            Sign In
+          </button>
+          <button
+            onClick={handleGoogleSignIn}
+            className="p-3 bg-red-500 text-white rounded-lg hover:bg-red-600 transition"
+          >
+            Sign In with Google
+          </button>
+          <button
+            onClick={handleSignOut}
+            className="p-3 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition"
+          >
+            Sign Out
+          </button>
+        </div>
+        {message && (
+          <p className="mt-4 text-center text-red-500">{message}</p>
+        )}
+      </div>
     </div>
   );
 }
