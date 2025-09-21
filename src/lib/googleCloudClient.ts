@@ -1,7 +1,6 @@
 // This file will handle Google Cloud AI integrations
 import { EndpointServiceClient } from '@google-cloud/aiplatform';
 import { DocumentProcessorServiceClient } from '@google-cloud/documentai';
-import { SessionsClient } from '@google-cloud/dialogflow';
 
 const projectId = process.env.GOOGLE_CLOUD_PROJECT_ID;
 const keyFile = process.env.GOOGLE_CLOUD_KEY_FILE;
@@ -18,12 +17,6 @@ export const vertexAI = new EndpointServiceClient({
 
 // Document AI setup
 export const documentAI = new DocumentProcessorServiceClient({
-  projectId,
-  keyFilename: keyFile,
-});
-
-// Dialogflow setup
-export const dialogflowClient = new SessionsClient({
   projectId,
   keyFilename: keyFile,
 });
