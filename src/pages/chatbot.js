@@ -12,7 +12,11 @@ export default function Chatbot() {
   useEffect(() => {
     const fetchUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+      if (!user) {
+        router.push('/auth');
+      } else {
+        setUser(user);
+      }
     };
     fetchUser();
   }, []);

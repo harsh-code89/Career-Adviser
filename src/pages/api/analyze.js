@@ -11,8 +11,13 @@ export default async function handler(req, res) {
     return res.status(400).json({ message: 'Missing resumeText in request body' });
   }
 
+  const endpoint = process.env.GEMINI_ENDPOINT_URL;
+  if (!endpoint) {
+    return res.status(500).json({ message: 'GEMINI_ENDPOINT_URL environment variable not set.' });
+  }
+
   const request = {
-    endpoint: 'projects/gemini-project/locations/us/endpoints/gemini-pro', // Replace with your Gemini endpoint
+    endpoint,
     instances: [
       {
         content: `Analyze the following resume and provide a summary, strengths, and areas for improvement: ${resumeText}`,

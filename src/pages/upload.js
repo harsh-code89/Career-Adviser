@@ -17,10 +17,14 @@ export default function ResumeUploader() {
   useEffect(() => {
     const fetchUser = async () => {
       const { data: { user } } = await supabase.auth.getUser();
-      setUser(user);
+      if (!user) {
+        router.push('/auth');
+      } else {
+        setUser(user);
+      }
     };
     fetchUser();
-  }, []);
+  }, [router]);
 
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);

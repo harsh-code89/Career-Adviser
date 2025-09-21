@@ -3,23 +3,6 @@ import Link from "next/link";
 export default function Home() {
   return (
     <div className="min-h-screen bg-gray-50 flex flex-col">
-      {/* Header */}
-      <header className="bg-white shadow-sm py-4 px-8">
-        <div className="max-w-7xl mx-auto flex justify-between items-center">
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gray-800 rounded-xl flex items-center justify-center">
-              <span className="text-white font-bold text-xl">CA</span>
-            </div>
-            <h1 className="text-2xl font-bold text-gray-800">Career Adviser</h1>
-          </div>
-          <nav className="hidden md:flex space-x-6">
-            <a href="#features" className="text-gray-600 hover:text-gray-800 transition-colors">Features</a>
-            <a href="#about" className="text-gray-600 hover:text-gray-800 transition-colors">About</a>
-            <a href="#contact" className="text-gray-600 hover:text-gray-800 transition-colors">Contact</a>
-          </nav>
-        </div>
-      </header>
-
       {/* Hero Section */}
       <main className="flex-1 flex flex-col items-center justify-center px-8 py-16 text-center">
         <h1 className="text-5xl md:text-7xl font-bold text-gray-800 mb-6 leading-tight">

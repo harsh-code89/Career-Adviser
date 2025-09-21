@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Link from 'next/link';
 export default function Analyze() {
   const router = useRouter();
   const [analysis, setAnalysis] = useState(null);
@@ -36,7 +37,7 @@ export default function Analyze() {
 
         const result = await analysisResponse.json();
         setAnalysis(result);
-      } catch (error) {
+      } catch {
         setError("Failed to analyze the resume. Please try again later.");
       } finally {
         setIsLoading(false);
@@ -77,6 +78,14 @@ export default function Analyze() {
                   <li key={index}>{improvement}</li>
                 ))}
               </ul>
+            </div>
+
+            <div className="text-center mt-8">
+              <Link href={`/career-paths?skills=${encodeURIComponent(analysis.strengths.join(','))}`}
+                className="bg-gray-800 text-white px-8 py-4 text-lg rounded-lg hover:bg-gray-700 transition-colors"
+              >
+                Explore Career Paths
+              </Link>
             </div>
           </div>
         )}

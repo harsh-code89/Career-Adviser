@@ -1,14 +1,22 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useRouter } from 'next/router';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function Auth() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLogin, setIsLogin] = useState(true);
   const [message, setMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    if (router.query.signup) {
+      setIsLogin(false);
+    }
+  }, [router.query.signup]);
 
   const handleAuth = async () => {
     setIsLoading(true);
@@ -17,7 +25,7 @@ export default function Auth() {
       if (isLogin) {
         const { error } = await supabase.auth.signInWithPassword({ email, password });
         if (error) throw error;
-        setMessage('Logged in successfully!');
+        router.push('/upload');
       } else {
         const { error } = await supabase.auth.signUp({ email, password });
         if (error) throw error;
