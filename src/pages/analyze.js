@@ -2,8 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { analyzeResume } from '@/lib/resumeAnalysis';
-
 export default function Analyze() {
   const router = useRouter();
   const [analysis, setAnalysis] = useState(null);
@@ -18,14 +16,27 @@ export default function Analyze() {
 
       try {
         const resumeUrl = decodeURIComponent(router.query.resumeUrl);
-        const response = await fetch(resumeUrl);
-        if (!response.ok) {
+        const resumeResponse = await fetch(resumeUrl);
+        if (!resumeResponse.ok) {
           throw new Error('Failed to fetch resume content.');
         }
-        const resumeText = await response.text();
-        const result = await analyzeResume(resumeText);
+        const resumeText = await resumeResponse.text();
+
+        const analysisResponse = await fetch('/api/analyze', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ resumeText }),
+        });
+
+        if (!analysisResponse.ok) {
+          throw new Error('Failed to analyze the resume.');
+        }
+
+        const result = await analysisResponse.json();
         setAnalysis(result);
-      } catch (err) {
+      } catch (error) {
         setError("Failed to analyze the resume. Please try again later.");
       } finally {
         setIsLoading(false);

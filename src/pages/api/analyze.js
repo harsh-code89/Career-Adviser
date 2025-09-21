@@ -1,6 +1,16 @@
 import { vertexAI } from '@/lib/googleCloudClient';
 
-export async function analyzeResume(resumeText) {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
+
+  const { resumeText } = req.body;
+
+  if (!resumeText) {
+    return res.status(400).json({ message: 'Missing resumeText in request body' });
+  }
+
   const request = {
     endpoint: 'projects/gemini-project/locations/us/endpoints/gemini-pro', // Replace with your Gemini endpoint
     instances: [
@@ -20,9 +30,9 @@ export async function analyzeResume(resumeText) {
     const [response] = await vertexAI.predict(request);
     const prediction = response.predictions[0];
     // Assuming the model returns a JSON string with summary, strengths, and improvements.
-    return JSON.parse(prediction.content);
+    res.status(200).json(JSON.parse(prediction.content));
   } catch (error) {
     console.error('Error analyzing resume with Gemini:', error);
-    throw new Error('Failed to get a response from the AI. Please try again later.');
+    res.status(500).json({ message: 'Failed to get a response from the AI.' });
   }
 }

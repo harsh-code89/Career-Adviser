@@ -1,6 +1,16 @@
 import { vertexAI } from '@/lib/googleCloudClient';
 
-export async function sendMessageToChatbot(sessionId, message) {
+export default async function handler(req, res) {
+  if (req.method !== 'POST') {
+    return res.status(405).json({ message: 'Method Not Allowed' });
+  }
+
+  const { sessionId, message } = req.body;
+
+  if (!sessionId || !message) {
+    return res.status(400).json({ message: 'Missing sessionId or message in request body' });
+  }
+
   const request = {
     endpoint: 'projects/gemini-project/locations/us/endpoints/gemini-pro', // Replace with your Gemini endpoint
     instances: [
@@ -19,11 +29,9 @@ export async function sendMessageToChatbot(sessionId, message) {
   try {
     const [response] = await vertexAI.predict(request);
     const prediction = response.predictions[0];
-    return {
-      fulfillmentText: prediction.content,
-    };
+    res.status(200).json({ fulfillmentText: prediction.content });
   } catch (error) {
     console.error('Error sending message to Gemini:', error);
-    throw new Error('Failed to get a response from the AI. Please try again later.');
+    res.status(500).json({ message: 'Failed to get a response from the AI.' });
   }
 }

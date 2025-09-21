@@ -4,21 +4,22 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
 import { uploadResume, getResumeUrl } from '@/lib/resume';
 import { supabase } from '@/lib/supabaseClient';
-import Link from 'next/link';
 
 export default function ResumeUploader() {
   const router = useRouter();
   const [user, setUser] = useState(null);
   const [file, setFile] = useState(null);
   const [message, setMessage] = useState('');
-  const [resumeUrl, setResumeUrl] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [dragActive, setDragActive] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
 
   useEffect(() => {
-    const { data: { user } } = await supabase.auth.getUser();
-    setUser(user);
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    fetchUser();
   }, []);
 
   const handleFileChange = (e) => {

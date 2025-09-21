@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { sendMessageToChatbot } from '@/lib/chatbot';
 import { supabase } from '@/lib/supabaseClient';
 
 export default function Chatbot() {
@@ -11,8 +10,11 @@ export default function Chatbot() {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const { data: { user } } = await supabase.auth.getUser();
-    setUser(user);
+    const fetchUser = async () => {
+      const { data: { user } } = await supabase.auth.getUser();
+      setUser(user);
+    };
+    fetchUser();
   }, []);
 
   const handleSendMessage = async () => {
@@ -29,9 +31,22 @@ export default function Chatbot() {
         setIsLoading(false);
         return;
       }
-      const response = await sendMessageToChatbot(user.id, input);
-      setMessages([...newMessages, { text: response.fulfillmentText, sender: 'bot' }]);
-    } catch (error) {
+
+      const response = await fetch('/api/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ sessionId: user.id, message: input }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to send message.');
+      }
+
+      const data = await response.json();
+      setMessages([...newMessages, { text: data.fulfillmentText, sender: 'bot' }]);
+    } catch {
       setMessages([...newMessages, { text: 'Sorry, something went wrong.', sender: 'bot' }]);
     } finally {
       setIsLoading(false);
